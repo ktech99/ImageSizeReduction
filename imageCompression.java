@@ -17,7 +17,7 @@ public class imageCompression {
     int[][] result = convertTo2DUsingGetRGB(image, output);
     int width = image.getWidth();
     int height = image.getHeight();
-    BufferedImage image2 = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+    BufferedImage image2 = new BufferedImage(width / 2, height / 2, BufferedImage.TYPE_INT_RGB);
     for (int y = 0; y < height - 1; y += 2) {
       for (int x = 0; x < width - 1; x += 2) {
         Color rgb = new Color(sc.nextInt(), sc.nextInt(), sc.nextInt());
@@ -27,7 +27,6 @@ public class imageCompression {
     File outputFile = new File("output.jpg");
     ImageIO.write(image2, "jpg", outputFile);
     PrintStream outputCompressed = new PrintStream(new File("compressed.txt"));
-    compress(inputFile, outputCompressed, inputFile);
   }
 
   private static int[][] convertTo2DUsingGetRGB(BufferedImage image, PrintStream output) {
@@ -51,28 +50,5 @@ public class imageCompression {
       output.println();
     }
     return result;
-  }
-
-  public static void compress(File inputFile, PrintStream outputCompressed, File inputFile2)
-      throws FileNotFoundException {
-    Scanner outerSc = new Scanner(inputFile);
-    Scanner firstScanner = new Scanner(inputFile2);
-    while (outerSc.hasNextLine()) {
-      Scanner innerSc = new Scanner(outerSc.nextLine());
-      int first = firstScanner.nextInt();
-      firstScanner.nextLine();
-      outputCompressed.print(first + " ");
-      while (innerSc.hasNextInt()) {
-        int val = 0;
-        if (innerSc.hasNextInt()) {
-          val = innerSc.nextInt();
-        }
-        if (innerSc.hasNextInt()) {
-          val += innerSc.nextInt();
-        }
-        outputCompressed.print(val + " ");
-      }
-      outputCompressed.println();
-    }
   }
 }
